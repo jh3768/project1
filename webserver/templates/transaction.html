@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+<body>
+<title>My Transactions</title>
+
+	<a href="/profile.html">Go back to My Profile</a>
+	
+	<br>
+	<br>
+	
+	<h1>Already confirmed transactions</h1>
+	 {% for transaction_id, owner, renter, in transaction %}
+ <table>
+   <tr>
+    <td>Transaction ID:</td>
+    <td>{{id}}</td>
+  </tr>
+  <tr>
+    <td>Owner:</td>
+    <td>{{owner}}</td>
+  </tr>  
+  <tr>
+    <td>Renter:</td>
+    <td>{{renter}}</td>
+  </tr>
+    <tr>
+    <td>Date:</td>
+    <td>{{date}}</td>
+  </tr>
+</table>
+	{% endfor %}
+
+
+<p>{{optional error_message if already rated}}</p>
+
+	<table>
+	<form name="post_rate" method="post" action="/post_rate" id="pr">
+	<tr>
+		<td class="label1"><font size="4"> Transaction id: </font></td>
+		<td><input placeholder="Fe83ge39" type="text"  name="transaction_id" maxlength="30" required /></td>
+	</tr>
+		<tr>
+		<td class="label2"><font size="4"> Rate </font></td>
+		<td><input placeholder="0-5" type="number" step="0.1" min="0"
+			max="5.0" name="rate" required /></td>
+	</tr>
+	<tr>
+		<td class="label3"><font size="4"> Review </font></td>
+		<td><textarea placeholder="Nice owner" name="description"
+				maxlength="300" required></textarea></td>
+	</tr>
+</table>
+<input type="submit" name="post_rate" value="Rate" style="font-size:18px; " />	
+</body>
+
+ </body>
+</html>

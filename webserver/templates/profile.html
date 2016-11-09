@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+<body>
+<title>My Profile</title>
+	<h1>Hello, {{name}}</h1>
+	<h2>Renter rate: {{rate}}</h2>
+	<h2>Number of Renting hisotry: {{number_of_rents}}</h2>
+	<h2>Date of Birth{{date_of_birth}}</h2>
+	<h2>Driver's License{{driver_license}}</h2>
+	<p>{{optional error_message}}</p>
+	<a href="/cars.html">Go to Homepage to see Cars!</a>
+	
+	<br>
+	<br>
+	<table>
+			<form name="post_car" method="post" action="/post_car" id="p">
+			<tr>
+				<td class="p_label"><b><font size="5">Post your car advertisement   </font></b></td>
+			</tr>
+			<tr>
+				<table>
+					<tr>
+						<td class="label1">
+							<font size="4">
+							Ad Title: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="Cheap Car to rent" type="text"  name="title" maxlength="30" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label2">
+							<font size="4">
+							Type: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="Suv" type="text"  name="type" maxlength="30" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label3">
+							<font size="4">
+							Make: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="Benz" type="text"  name="make" maxlength="30" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label4">
+							<font size="4">
+							Color: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="White" type="text"  name="color" maxlength="30" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label5">
+							<font size="4">
+							Mileages: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="31000" type="text"  name="mile" maxlength="6" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label6">
+							<font size="4">
+							Plate Number: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="F3G3921" type="text"  name="plate" maxlength="30" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label7">
+							<font size="4">
+							Availability 
+							</font>
+						</td>
+						<td>
+							<input placeholder="2016-12-01 to 2016-12-02" type="text"  name="aval" maxlength="30" required />
+						</td>
+					</tr>
+					<tr>
+					<tr>
+						<td class="label8">
+							<font size="4">
+							Location 
+							</font>
+						</td>
+						<td>
+							<input placeholder="116th street" type="text"  name="aval" maxlength="30" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label9">
+							<font size="4">
+							Daily Price 
+							</font>
+						</td>
+						<td>
+							<input placeholder="100" type="number" step="0.1" min="0" max="1000000" name="price" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label10">
+							<font size="4">
+							Additional Description
+							</font>
+						</td>
+						<td>
+							<textarea placeholder="Nice Car" name="description" maxlength="300" required ></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						</td>
+						<td align="right">
+							<input type="submit" name="post_car" value="Go and post!" style="font-size:18px; " />
+						</td>
+					</tr>
+				</table>
+			</tr>
+		</form>
+	</table>
+	
+	
+	<h1>Requests that waiting for you to confirm</h1>
+	{% for email, id in requests %}
+ <table>
+   <tr>
+    <td>Request renter email:</td>
+    <td>{{email}}</td>
+  </tr>
+  <tr>
+    <td>Request your car advertisement id:</td>
+    <td>{{id}}</td>
+  </tr>  
+</table>
+<input type="submit" name="process" value="Confirm requests and process a transaction" style="font-size:18px; " />
+	{% endfor %}
+	
+		<br>
+	<br>
+	
+		<a href="/transaction.html">Go to My Transaction</a>
+	
+	<br>
+	<br>
+	
+	<h1>Your Bookmarks</h1>
+	{% for date, ad_id in bookmark %}
+ <table>
+   <tr>
+    <td>Bookmark date:</td>
+    <td>{{date}}</td>
+  </tr>
+  <tr>
+    <td>Bookmark car advertisement id:</td>
+    <td>{{ad_id}}</td>
+  </tr>  
+</table>
+	{% endfor %}	
+	
+		
+</body>
+
+ </body>
+</html>

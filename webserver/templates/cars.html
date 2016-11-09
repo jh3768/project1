@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+<center>
+<h2>Checkout these cool car advertisements</h2>
+<h3>Want to rent the car? Send your renting car request to the owner</h3>
+<h5> (Note We can only process the request if you enter the Correct Information)</h5>
+
+ <form action="#">
+  Car Advertisement ID:<br>
+  <input type="text" name="carid"><br>
+  Your Email:<br>
+  <input type="email" name="email">
+  <br>
+    <input type="submit" value="Send Request" >
+</form>
+  <br>
+  :)
+  <br>
+</head>
+
+<div class="posts">
+<hr>
+	{% for title, description, location in car_ad %}
+	<h1>{{title}}</h1>
+    <p>{{description}}</p>
+    <p>{{location}}</p>
+    {% endfor %}
+    
+    {% for id, price, mile, type, make, color, avail in car_ad_info %}
+ <table>
+   <tr>
+    <td>Car Advertisement ID:</td>
+    <td>{{id}}</td>
+  </tr>
+  <tr>
+    <td>Daily Price:</td>
+    <td>{{price}}</td>
+  </tr>  
+  <tr>
+    <td>Car Mileages:</td>
+    <td>{{mile}}</td>
+  </tr>
+  <tr>
+    <td>Car Type</td>
+    <td>{{type}}</td>
+  </tr>
+    <tr>
+    <td>Car Make</td>
+    <td>{{make}}</td>
+  </tr>
+    <tr>
+    <td>Car color</td>
+    <td>{{color}}</td>
+  </tr>
+    <tr>
+    <td>Availability</td>
+    <td>{{aval}}</td>
+  </tr>
+</table>
+</div>
+{% endfor %}
+</center>
+</body>
+</html>
+

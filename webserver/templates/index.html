@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+<center>
+<h1>Welcome to OpenCar</h1> 
+<div id="login_form">
+<form name = "l1" method="post" action="/profile" id="l1">
+  Email:<br>
+  <input type="email" name="email" placeholder="@email.com">
+  <br>
+  Password:<br>
+  <input type="password" name="password">
+  <br><br>
+  <input type="submit" name="login" value="Login">
+</form>
+</div>
+
+<p color="red">{{error_message}}</p>
+
+<h2>If you do not have an account yet, please sign up here first!</h2>
+<div id="register_form">
+<form name = "r1" method="post" action="/profile" id="r1">
+  Email:<br>
+  <input type="email" name="email" placeholder="@email.com">
+  <br>
+  Password:<br>
+  <input type="password" name="password">
+  <br>
+  Name:<br>
+  <input type="text" name="name"  placeholder="first name  last name">
+  <br><br>
+  Driver License Number:<br>
+  <input type="text" name="drivelicense" placeholder="driver license"><br>
+  <br>
+  Date of Birth:<br>
+  <input type="text" name="birth" placeholder="date of birth">
+  <br><br>
+  <input type="submit" name = "registra" value="Sign Up"><br>
+</form>
+</div>
+</center>
+</body>
+</html>
+
