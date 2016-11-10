@@ -182,6 +182,9 @@ def user_ad_car(uid):
 			if cursor.rowcount == 0:
 				conn.execute("insert into owner(owner_id, owner_rating, owner_rating_num) values(%s, %s, %s)", uid, 3, 0)
 			return "successfully post car ad"
+
+		except IntegrityError:
+			return "invalid input(price > 0 && mileages > 0), try again"
 		except Exception as e:
 			print e.message
 			return "fail"
@@ -273,6 +276,9 @@ def renter_rate_owner(uid):
 		conn.execute("insert into rate_comment(comment_id, owner_id, renter_id, rate, rate_time, review) values(%s, %s, %s, %s, %s, %s)", comment_id, owner_id, uid, rate, rate_time, review)
 		conn.execute("update owner set owner_rating = (owner_rating * owner_rating_num + '%s') / (owner_rating_num + 1), owner_rating_num = owner_rating_num + 1 where owner_id = '%s'" %(rate, owner_id))
 		return "successfully rated"
+
+	except IntegrityError:
+		return "invalid input(rating > 0 && rating <= 5), try again"
 	except Exception as e:
 		print e.message
 		return "fail"
