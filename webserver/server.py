@@ -77,8 +77,7 @@ def user_profile(uid):
 		try:
 			user_cursor = conn.execute(
 				"select user_id, name, email, driver_license, birth from users where user_id = '%s'" % (uid))
-			print user_cursor.fetchone()
-			return render_template('user_profile.html', data=user_cursor.fetchone())
+			return render_template('user_profile.html', data=user_cursor.fetchone(), user_id=uid)
 
 		except Exception as e:
 			print e.message
@@ -103,7 +102,7 @@ def ad_car(uid, ad_id):
 	if request.method == 'GET':
 		try:
 			cursor = conn.execute("select u.name, o.owner_rating, ad.*, from ad_car as ad, users as u, owner as o where ad.ad_id = '%s' and ad.owner_id = u.user_id and ad.owner_id = o.owner_id" %(ad_id))
-			return render_template("ad_car.html", data=cursor.fetchall())
+			return render_template("ad_car.html", data=cursor.fetchall(), user_id=uid, ad_id=ad_id)
 		except Exception as e:
 			print e.message
 			return "fail"
@@ -155,7 +154,7 @@ def user_ad_car(uid):
 	if request.method == 'GET':
 		try:
 			cursor = conn.execute("select ad_car.ad_id, ad_car.title, ad_car.description, ad_car.location from ad_car where owner_id = '%s'" %(uid))
-			return render_template("user_ad_car.html", data=cursor.fetchall())
+			return render_template("user_ad_car.html", data=cursor.fetchall(), user_id=uid)
 		except Exception as e:
 			print e.message
 			return "fail"
@@ -208,7 +207,7 @@ def user_bookmark(uid):
 		try:
 			cursor = conn.execute("select b.mark_date, ad.ad_id, ad.title, ad.description, ad.location from bookmark as b, ad_car as ad where b.renter_id = '%s' and b.ad_id = ad.ad_id" % (uid))
 			print cursor.fetchall()
-			return render_template("user_bookmark.html", data=cursor.fetchall())
+			return render_template("user_bookmark.html", data=cursor.fetchall(), user_id=uid)
 		except Exception as e:
 			print e.message
 			return "fail"
@@ -230,7 +229,7 @@ def user_transaction(uid):
 	# show user's transaction page
 	try:
 		cursor = conn.execute("select t.*, ad.title, ad.description, ad.location from transaction as t, ad_car as ad where (t.renter_id = '%s' or t.owner_id = '%s') and t.ad_id = ad.ad_id" % (uid, uid))
-		return render_template("user_transaction.html", data=cursor.fetchall())
+		return render_template("user_transaction.html", data=cursor.fetchall(), user_id=uid)
 	except Exception as e:
 		print e.message
 		return "fail"
