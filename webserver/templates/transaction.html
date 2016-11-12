@@ -24,11 +24,11 @@ table, th, td {
     <td>{{i[0]}}</td>
   </tr>
   <tr>
-    <td>Owner:</td>
+    <td>Owner ID:</td>
     <td>{{i[1]}}</td>
   </tr>  
   <tr>
-    <td>Renter:</td>
+    <td>Renter ID:</td>
     <td>{{i[2]}}</td>
   </tr>
     <tr>
@@ -58,10 +58,11 @@ table, th, td {
 </table>
 	{% endfor %}
 	
+<br>
 
 <h1>Transactions Not finished and waiting for you to finish:</h1>
 	 {% for i in unfinished %}
-	 <br>
+	<br>
 	<br>
 	 <a>Click the link below to finish this request</a>   
     <a href="/user/profile/{{user_id}}/transaction/{{i[7]}}/finish/{{i[2]}}">Finish</a> 	 
@@ -71,11 +72,11 @@ table, th, td {
     <td>{{i[0]}}</td>
   </tr>
   <tr>
-    <td>Owner:</td>
+    <td>Owner ID:</td>
     <td>{{i[1]}}</td>
   </tr>  
   <tr>
-    <td>Renter:</td>
+    <td>Renter ID:</td>
     <td>{{i[2]}}</td>
   </tr>
     <tr>
@@ -106,17 +107,19 @@ table, th, td {
 	
 	<h1>Transactions Finished:</h1>
 	 {% for i in finished %}
+	 <br>
+	 <br>
  <table>
    <tr>
     <td>Transaction ID:</td>
     <td>{{i[0]}}</td>
   </tr>
   <tr>
-    <td>Owner:</td>
+    <td>Owner ID:</td>
     <td>{{i[1]}}</td>
   </tr>  
   <tr>
-    <td>Renter:</td>
+    <td>Renter ID:</td>
     <td>{{i[2]}}</td>
   </tr>
     <tr>
