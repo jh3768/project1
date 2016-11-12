@@ -10,7 +10,7 @@ tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
 
 
-database_url = ""
+database_url = "postgresql://jg3645:rh5r9@104.196.175.120/postgres"
 engine = create_engine(database_url)
 conn = engine.connect()
 app.config['SECRET_KEY'] = '123456'
@@ -37,10 +37,10 @@ def signup():
         conn.execute("insert into owner(owner_id, owner_rating, owner_rating_num) values(%s, %s, %s)", user_id, 5, 0)
         return redirect('/user/' + str(user_id))
     except IntegrityError:
-        return "email already exists"
+        return "invalid attempt, please go backs"
     except Exception as e:
         print e.message
-        return "fail"
+        return "invalid attempt, please go backs"
 
 
 
@@ -65,7 +65,7 @@ def login():
             if check_password_hash(record['password'], password):
                 return redirect('/user/' + record.user_id)
                 #return render_template("profile.html")
-            return "email and password not match"
+            return "invalid attempt, please go backs"
         except Exception as e:
             print e.message
             print "fail login"
@@ -83,7 +83,7 @@ def user(uid):
         return render_template("cars.html", car_info = car_info, user_id=uid)
     except Exception as e:
         print e.message
-        return "fail"
+        return "invalid attempt, please go backs"
 
 
 # user's profile page.
@@ -93,11 +93,15 @@ def user_profile(uid):
         try:
             user_cursor = conn.execute(
                 "select user_id, name, email, driver_license, birth from users where user_id = '%s'" % (uid)).fetchone()
-            return render_template('profile.html', name = user_cursor['name'], date_of_birth = user_cursor['birth'], driver_license = user_cursor['driver_license'], email = user_cursor['email'], user_id=uid)
+            rate =  conn.execute(
+                "select * from owner  where owner_id = '%s'" % (uid)).fetchone()
+            number_of_renting = conn.execute(
+                "select num_of_renting from renter  where renter_id = '%s'" % (uid)).fetchone()
+            return render_template('profile.html', number_of_renting = number_of_renting['num_of_renting'], rate = rate['owner_rating'], rate_num = rate['owner_rating_num'], name = user_cursor['name'], date_of_birth = user_cursor['birth'], driver_license = user_cursor['driver_license'], email = user_cursor['email'], user_id=uid)
 
         except Exception as e:
             print e.message
-            return "fail profile"
+            return "invalid attempt, please go backs"
 
 
 @app.route('/bookmark/ad/<ad_id>', methods=['POST', 'GET'])
@@ -116,7 +120,7 @@ def bookmark(ad_id):
         return "already bookmarked"
     except Exception as e:
         print e.message
-        return "fail bookmark" 
+        return "invalid attempt, please go backs"
       
 #ad_car page. It's the page where renters can rent and bookmark car ad
 @app.route('/user/ad/<ad_id>', methods=['GET', 'POST', 'PUT'])
@@ -134,7 +138,7 @@ def ad_car(ad_id):
             return render_template("car_detail.html", car_info=car_info, user_id=uid, ad_id=ad_id, message = message)
         except Exception as e:
             print e.message
-            return "fail1"
+            return "invalid attempt, please go backs"
 
     # user rent car
     elif request.method == 'POST':
@@ -143,11 +147,13 @@ def ad_car(ad_id):
         try:
             owner_id = conn.execute("select owner_id from ad_car where ad_id = '%s'" %(ad_id)).fetchone()['owner_id']
             if owner_id == uid:
-
                 return "you cannot rent your own car, please go back"
+            attempt = conn.execute("select transaction_id from transaction where ad_id = '%s' and renter_id = '%s'" %(ad_id, uid)).fetchone()
+            if attempt is not None:
+                return "you have already sent your request, please go back"
         except Exception as e:
             print e.message
-            return "fail2"
+            return "invalid attempt, please go backs"
 
         # transaction_id, transaction_date, owner_id, renter_id, ad_id, accept, finish
         try:
@@ -166,7 +172,7 @@ def ad_car(ad_id):
             return redirect('/user/' + str(uid))
         except Exception as e:
             print e.message
-            return "fail3"
+            return "invalid attempt, please go backs"
 
     # user bookmark ad
     elif request.method == "PUT":
@@ -198,7 +204,7 @@ def user_ad_car(uid):
             return render_template("user_post.html", car_info=car_info, user_id=uid, message = message)
         except Exception as e:
             print e.message
-            return "fail"
+            return "invalid attempt, please go backs"
 
     # user post car ad
     elif request.method == 'POST':
@@ -224,7 +230,7 @@ def user_ad_car(uid):
 #             return "invalid input(price > 0 && mileages > 0), try again"
         except Exception as e:
             print e.message
-            return "fail post"
+            return "invalid attempt, please go backs"
 
     # user delete car ad
     else:
@@ -234,7 +240,7 @@ def user_ad_car(uid):
             return "successfully delete car ad"
         except Exception as e:
             print e.message
-            return "fail"
+            return "invalid attempt, please go backs"
 
 
 # user's bookmark page
@@ -250,7 +256,7 @@ def user_bookmark(uid):
             return render_template("bookmark.html", bookmark = bookmark, user_id=uid)
         except Exception as e:
             print e.message
-            return "fail"
+            return "invalid attempt, please go backs"
 
     # user unbookmark car ad
     else:
@@ -260,7 +266,7 @@ def user_bookmark(uid):
             return "successfully unbookmarked"
         except Exception as e:
             print e.message
-            return "fail"
+            return "invalid attempt, please go backs"
 
 
 # users's transaction page
@@ -298,14 +304,21 @@ def owner_accept_transaction(uid, ad_id, renter_id):
     #ad_id = request.form['ad_id']
     #renter_id = request.form['renter_id']
     try:
-        conn.execute("update transaction set accept = TRUE where owner_id = '%s' and renter_id = '%s' and ad_id = '%s'" %(uid, renter_id, ad_id))
+        conn.execute("update transaction set accept = TRUE where owner_id = '%s' and renter_id = '%s' and ad_id = '%s'" % (uid, renter_id, ad_id))
         cursor = conn.execute("select t.*, ad.title, ad.description, ad.location from transaction as t, ad_car as ad where (t.renter_id = '%s' or t.owner_id = '%s') and t.ad_id = ad.ad_id" % (uid, uid))
         cursor = cursor.fetchall()
+        
+        other_request = conn.execute("select transaction_id from transaction where ad_id = '%s' and accept = '%s'" % (ad_id, False)).fetchall()
+        print other_request
+        if len(other_request) != 0:
+             for other in other_request:
+                 print "delete from transaction where transaction_id = '%s" % (other['transaction_id'])
+                 other_request = conn.execute("delete from transaction where transaction_id = '%s'" % (other['transaction_id']))
         print "successfully accept"
         return redirect('/user/' + str(uid))
     except Exception as e:
         print e.message
-        return "fail accept"
+        return "invalid attempt, please go backs"
 
 
 
@@ -323,7 +336,7 @@ def owner_finish_transaction(uid, ad_id, renter_id):
         return redirect('/user/' + str(uid))
     except Exception as e:
         print e.message
-        return "fail finish"
+        return "invalid attempt, please go backs"
 
 
 # renter rate owner
@@ -353,7 +366,7 @@ def renter_rate_owner(uid):
         return "invalid input(rating > 0 && rating <= 5), try again"
     except Exception as e:
         print e.message
-        return "fail rate"
+        return "invalid attempt, please go backs"
 
 
 # user's comment page
@@ -369,8 +382,8 @@ def user_comment(uid):
         return render_template('comment.html', comment = comment)
     except Exception as e:
         print e.message
-        return "fail"
+        return "invalid attempt, please go backs"
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host = '0.0.0.0')
