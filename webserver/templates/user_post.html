@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+<body>
+<title>My Profile</title>
+	<h1>Post Car</h1>
+
+	<p>{{message}}</p>
+	
+<a>Click the link to go back to Cars Advertisements</a>   
+    <a href="/user/{{user_id}}">Cars Advertisements</a> <br>
+ Click Here to Go to Your Profile <a href="/user/profile/{{user_id}}"> Profile</a>   
+	<br>
+	<br>
+	<table>
+			<form name="post_car" method="post" id="p">
+			<tr>
+				<td class="p_label"><b><font size="5">Post your car advertisement   </font></b></td>
+			</tr>
+					<tr>
+						<td class="label1">
+							<font size="4">
+							Ad Title: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="Cheap Car to rent" type="text"  name="title" value = "title" maxlength="30" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label2">
+							<font size="4">
+							Type: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="Suv" type="text"  name="type" value = "suv" maxlength="30" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label3">
+							<font size="4">
+							Make: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="Benz" type="text"  name="make"  value = "benz" maxlength="30" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label4">
+							<font size="4">
+							Color: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="White" type="text"  name="color" value = "white" maxlength="30" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label5">
+							<font size="4">
+							Mileages: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="31000" type="number" step="100" min="0" max="1000000" name="mile" value = "31000" maxlength="6" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label6">
+							<font size="4">
+							Plate Number: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="F3G3921" type="text"  name="plate" value = "F3F3G3" maxlength="30" required />
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="label8">
+							<font size="4">
+							Location 
+							</font>
+						</td>
+						<td>
+							<input placeholder="116th street" type="text"  name="local" value = "116" maxlength="30" required />
+						</td>
+					</tr>
+					<tr>
+						<td class="label9">
+							<font size="4">
+							Daily Price 
+							</font>
+						</td>
+						<td>
+							<input placeholder="100" type="number" step="0.1" min="0" max="1000000" value = 100 name="price" required />
+						</td>
+					</tr><!-- <tr>
+						<td class="label11">
+							<font size="4">
+							Your Email: 
+							</font>
+						</td>
+						<td>
+							<input placeholder="@email.com" type="email"  name="email" maxlength="30" required />
+						</td>
+					</tr> -->
+					<tr>
+						<td class="label12">
+							<font size="4">
+							Additional Description
+							</font>
+						</td>
+						<td>
+							<textarea placeholder="Nice Car" name="description" value = "nice" maxlength="300" required ></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						</td>
+						<td align="right">
+							<input type="submit" name="post_car" value="Go and post!" style="font-size:18px; " />
+						</td>
+					</tr>
+				</table>
+			</tr>
+		</form>
+	</table>
+	<br>
+	<br>
+	
+	<h1>Your Post Histories: </h1>
+	{% for d in car_info %}
+<table>
+    <td>Car Advertisement ID:</td>
+    <td>{{d[0]}}</td>
+  </tr>
+   <tr>
+    <td>Title:</td>
+    <td>{{d[1]}}</td>
+  </tr>
+   <tr>
+    <td>Description: </td>
+    <td>{{d[2]}}</td>
+  </tr>
+  <tr>
+    <td>Location: </td>
+    <td>{{d[3]}}</td>
+  </tr>
+  	<br>
+	<br>
+    
+</table>
+{% endfor %}
+
+ </body>
+</html>

@@ -8,41 +8,197 @@ table, th, td {
 <body>
 <title>My Transactions</title>
 
-	<a href="/profile.html">Go back to My Profile</a>
 	
 	<br>
 	<br>
 	
-	<h1>Already confirmed transactions</h1>
-	 {% for transaction_id, owner, renter, in transaction %}
+	<h1>Transactions Waiting for you to accept:</h1>
+	 {% for i in unaccepted %}
+	 <br>
+	<br>
+	 <a>Click the link below to accept this request</a>   
+    <a href="/user/profile/{{user_id}}/transaction/{{i[7]}}/accept/{{i[2]}}">Accept</a>  
  <table>
    <tr>
     <td>Transaction ID:</td>
-    <td>{{id}}</td>
+    <td>{{i[0]}}</td>
   </tr>
   <tr>
     <td>Owner:</td>
-    <td>{{owner}}</td>
+    <td>{{i[1]}}</td>
   </tr>  
   <tr>
     <td>Renter:</td>
-    <td>{{renter}}</td>
+    <td>{{i[2]}}</td>
   </tr>
     <tr>
     <td>Date:</td>
-    <td>{{date}}</td>
+    <td>{{i[3]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Title:</td>
+    <td>{{i[4]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Description:</td>
+    <td>{{i[5]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Location:</td>
+    <td>{{i[6]}}</td>
+  </tr>
+     <tr>
+    <td>Car Advertisement ID:</td>
+    <td>{{i[7]}}</td>
+  </tr>
+  <tr>
+</table>
+	{% endfor %}
+	
+
+<h1>Transactions Not finished and waiting for you to finish:</h1>
+	 {% for i in unfinished %}
+	 <br>
+	<br>
+	 <a>Click the link below to finish this request</a>   
+    <a href="/user/profile/{{user_id}}/transaction/{{i[7]}}/finish/{{i[2]}}">Finish</a> 	 
+ <table>
+   <tr>
+    <td>Transaction ID:</td>
+    <td>{{i[0]}}</td>
+  </tr>
+  <tr>
+    <td>Owner:</td>
+    <td>{{i[1]}}</td>
+  </tr>  
+  <tr>
+    <td>Renter:</td>
+    <td>{{i[2]}}</td>
+  </tr>
+    <tr>
+    <td>Date:</td>
+    <td>{{i[3]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Title:</td>
+    <td>{{i[4]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Description:</td>
+    <td>{{i[5]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Location:</td>
+    <td>{{i[6]}}</td>
+  </tr>
+       <tr>
+    <td>Car Advertisement ID:</td>
+    <td>{{i[7]}}</td>
   </tr>
 </table>
 	{% endfor %}
+	
+	<h1>Transactions Finished:</h1>
+	 {% for i in finished %}
+ <table>
+   <tr>
+    <td>Transaction ID:</td>
+    <td>{{i[0]}}</td>
+  </tr>
+  <tr>
+    <td>Owner:</td>
+    <td>{{i[1]}}</td>
+  </tr>  
+  <tr>
+    <td>Renter:</td>
+    <td>{{i[2]}}</td>
+  </tr>
+    <tr>
+    <td>Date:</td>
+    <td>{{i[3]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Title:</td>
+    <td>{{i[4]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Description:</td>
+    <td>{{i[5]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Location:</td>
+    <td>{{i[6]}}</td>
+  </tr>
+       <tr>
+    <td>Car Advertisement ID:</td>
+    <td>{{i[7]}}</td>
+  </tr>
+	
+{% endfor %}	
+</table>	
+	<h1>You have rent the following cars:</h1>
+	 {% for i in unrated %}
+	 
+	 <br><br>
+ <table>
+   <tr>
+    <td>Transaction ID:</td>
+    <td>{{i[0]}}</td>
+  </tr>
+  <tr>
+    <td>Owner:</td>
+    <td>{{i[1]}}</td>
+  </tr>  
+  <tr>
+    <td>Renter:</td>
+    <td>{{i[2]}}</td>
+  </tr>
+    <tr>
+    <td>Date:</td>
+    <td>{{i[3]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Title:</td>
+    <td>{{i[4]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Description:</td>
+    <td>{{i[5]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Location:</td>
+    <td>{{i[6]}}</td>
+  </tr>
+       <tr>
+    <td>Car Advertisement ID:</td>
+    <td>{{i[7]}}</td>
+  </tr>
+</table>
+<br><br>
+	{% endfor %}
+	<br><br>
 
 
-<p>{{optional error_message if already rated}}</p>
+<p>{{message}}</p>
 
+<h1>Rate the car you have rented before:</h1>
 	<table>
-	<form name="post_rate" method="post" action="/post_rate" id="pr">
+	<form name="post_rate" method="post" action="/user/profile/{{user_id}}/transaction/rate" id="pr">
 	<tr>
-		<td class="label1"><font size="4"> Transaction id: </font></td>
-		<td><input placeholder="Fe83ge39" type="text"  name="transaction_id" maxlength="30" required /></td>
+		<td class="label1"><font size="4"> Owner ID: </font></td>
+		<td><input placeholder="Fe83ge39" type="text"  name="owner_id"required /></td>
 	</tr>
 		<tr>
 		<td class="label2"><font size="4"> Rate </font></td>

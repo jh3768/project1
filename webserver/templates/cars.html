@@ -8,61 +8,32 @@ table, th, td {
 </style>
 <center>
 <h2>Checkout these cool car advertisements</h2>
-<h3>Want to rent the car? Send your renting car request to the owner</h3>
-<h5> (Note We can only process the request if you enter the Correct Information)</h5>
 
- <form action="#">
-  Car Advertisement ID:<br>
-  <input type="text" name="carid"><br>
-  Your Email:<br>
-  <input type="email" name="email">
-  <br>
-    <input type="submit" value="Send Request" >
-</form>
-  <br>
-  :)
-  <br>
+	{{message}}
+Click Here to Go to Your Profile <a href="/user/profile/{{user_id}}"> Profile</a>
 </head>
 
 <div class="posts">
 <hr>
-	{% for title, description, location in car_ad %}
-	<h1>{{title}}</h1>
-    <p>{{description}}</p>
-    <p>{{location}}</p>
-    {% endfor %}
-    
-    {% for id, price, mile, type, make, color, avail in car_ad_info %}
- <table>
-   <tr>
-    <td>Car Advertisement ID:</td>
-    <td>{{id}}</td>
+    {% for d in car_info %}
+<table> 
+ <p>Click the link below to see more details</p>   
+    <a href="/user/ad/{{d[0]}}">More details</a>
+
+       <tr>
+    <td>Title:</td>
+    <td>{{d[1]}}</td>
   </tr>
   <tr>
-    <td>Daily Price:</td>
-    <td>{{price}}</td>
+    <td>Description:</td>
+    <td>{{d[2]}}</td>
   </tr>  
   <tr>
-    <td>Car Mileages:</td>
-    <td>{{mile}}</td>
+    <td>Location:</td>
+    <td>{{d[3]}}</td>
   </tr>
-  <tr>
-    <td>Car Type</td>
-    <td>{{type}}</td>
-  </tr>
-    <tr>
-    <td>Car Make</td>
-    <td>{{make}}</td>
-  </tr>
-    <tr>
-    <td>Car color</td>
-    <td>{{color}}</td>
-  </tr>
-    <tr>
-    <td>Availability</td>
-    <td>{{aval}}</td>
-  </tr>
-</table>
+  </table>  
+
 </div>
 {% endfor %}
 </center>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+<center>
+<h2>Checkout these cool car advertisements</h2>
+
+	{{message}}
+  <br>
+  :)
+  <br>
+</head>
+
+<div class="posts">
+<hr>
+	    <form name="rent" method="post"  id="c">
+      <input type="submit" name="rent_cars" value="Send request to rent car" style="font-size:18px; " />
+    </form>
+   	  <br><br>
+    {% for d in car_info %}
+
+     Bookmark this ad: <a href="/bookmark/ad/{{d[2]}}"> Bookmark</a>  
+ <table>
+   <tr>
+    <td>Name:</td>
+    <td>{{d[0]}}</td>
+  </tr>
+  <tr>
+    <td>Owner Rating:</td>
+    <td>{{d[1]}}</td>
+  </tr>  
+  <tr>
+    <td>Car Advertisement ID:</td>
+    <td>{{d[2]}}</td>
+  </tr>
+   <tr>
+    <td>Daily Price:</td>
+    <td>{{d[3]}}</td>
+  </tr>
+   <tr>
+    <td>Car Type: </td>
+    <td>{{d[4]}}</td>
+  </tr>
+  <tr>
+    <td>Car Make: </td>
+    <td>{{d[5]}}</td>
+  </tr>
+    <tr>
+    <td>Car Mileages: </td>
+    <td>{{d[6]}}</td>
+  </tr>
+    <tr>
+    <td>Car Color: </td>
+    <td>{{d[7]}}</td>
+</table>
+</div>
+{% endfor %}
+
+</center>
+</body>
+</html>
+

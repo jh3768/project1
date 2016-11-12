@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+<body>
+<title>Bookmarks</title>
+
+	
+	<br>
+	<br>
+	<h1>Bookmarks</h1>
+	 {% for i in bookmark %}
+	 
+	<br>
+	<br> 
+ <table>
+   <tr>
+    <td>Title:</td>
+    <td>{{i[0]}}</td>
+  </tr>
+   <tr>
+    <td>Description:</td>
+    <td>{{i[1]}}</td>
+  </tr>   
+  <tr>
+    <td>Location:</td>
+    <td>{{i[2]}}</td>
+  </tr>  
+  <tr>
+    <td>ad_ad:</td>
+    <td>{{i[3]}}</td>
+  </tr>
+    <tr>
+    <td>Mark Date:</td>
+    <td>{{i[4]}}</td>
+  </tr>
+   
+</table>
+	{% endfor %}
+	
+
+</body>
+
+ </body>
+</html>

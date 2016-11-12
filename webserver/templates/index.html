@@ -4,38 +4,38 @@
 <center>
 <h1>Welcome to OpenCar</h1> 
 <div id="login_form">
-<form name = "l1" method="post" action="/profile" id="l1">
+<form name = "l1" method="post" action="/profile1" id="l1">
   Email:<br>
-  <input type="email" name="email" placeholder="@email.com">
+  <input type="email" name="email" placeholder="@email.com" maxlength="30" required>
   <br>
   Password:<br>
-  <input type="password" name="password">
+  <input type="password" name="password" required>
   <br><br>
   <input type="submit" name="login" value="Login">
 </form>
 </div>
 
-<p color="red">{{error_message}}</p>
+<p color="red">{{message}}</p>
 
 <h2>If you do not have an account yet, please sign up here first!</h2>
 <div id="register_form">
-<form name = "r1" method="post" action="/profile" id="r1">
+<form name = "r1" method="post" action="/profile2" id="r1", required>
   Email:<br>
-  <input type="email" name="email" placeholder="@email.com">
+  <input type="email" name="email" placeholder="@email.com " maxlength="30" required>
   <br>
   Password:<br>
   <input type="password" name="password">
   <br>
   Name:<br>
-  <input type="text" name="name"  placeholder="first name  last name">
+  <input type="text" name="name"  placeholder="first name  last name"  maxlength="30" required>
   <br><br>
   Driver License Number:<br>
-  <input type="text" name="drivelicense" placeholder="driver license"><br>
+  <input type="text" name="drivelicense" placeholder="driver license" maxlength="10" required><br>
   <br>
   Date of Birth:<br>
-  <input type="text" name="birth" placeholder="date of birth">
+  <input type="date" name="birth" placeholder="xxxx-xx-xx">
   <br><br>
-  <input type="submit" name = "registra" value="Sign Up"><br>
+  <input type="submit" name = "registra" action = '/p' value="Sign Up" required><br>
 </form>
 </div>
 </center>

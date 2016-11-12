@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+<body>
+<title>Comments about You as both an Owner or Renter</title>
+
+	
+	<br>
+	<br>
+	<h1>Comments about You as an Owner or Renter</h1>
+	 {% for i in comment %}
+	 
+	 <br><br>
+ <table>
+   <tr>
+    <td>Comment ID:</td>
+    <td>{{i[0]}}</td>
+  </tr>
+   <tr>
+    <td>Owner Name:</td>
+    <td>{{i[5]}}</td>
+  </tr>   
+  <tr>
+    <td>Renter Name:</td>
+    <td>{{i[1]}}</td>
+  </tr>  
+  <tr>
+    <td>Rate:</td>
+    <td>{{i[2]}}</td>
+  </tr>
+    <tr>
+    <td>Rate Date:</td>
+    <td>{{i[3]}}</td>
+  </tr>
+    </tr>
+    <tr>
+    <td>Review:</td>
+    <td>{{i[4]}}</td>
+  </tr>
+   
+</table>
+	{% endfor %}
+	
+
+</body>
+
+ </body>
+</html>
