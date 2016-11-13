@@ -76,9 +76,11 @@ def login():
 def user(uid):
     try:
         #car_ad_info = conn.execute('SELECT title, description, location, ad_id, daily_price, mileages, type, make, color, availability FROM ad_car').fetchall();
-        cursor = conn.execute("select ad_car.ad_id, ad_car.title, ad_car.description, ad_car.location from ad_car").fetchall()
+        cursor = conn.execute("select ad_car.ad_id, ad_car.title, ad_car.description, ad_car.location, ad_car.availability from ad_car").fetchall()
         car_info = []
         for i in cursor:
+            print i 
+            if i[4] == 'TRUE' or i[4] == 'true':
                 car_info.append([i[0], i[1], i[2], i[3]])
         return render_template("cars.html", car_info = car_info, user_id=uid)
     except Exception as e:
@@ -157,7 +159,8 @@ def ad_car(ad_id):
 
         # transaction_id, transaction_date, owner_id, renter_id, ad_id, accept, finish
         try:
-            conn.execute("update ad_car set availability  = FALSE where ad_id = '%s'" %(ad_id))
+            #conn.execute("update ad_car set availability  = FALSE where ad_id = '%s'" %(ad_id))
+            
             conn.execute("insert into transaction(transaction_id, transaction_date, owner_id, renter_id, ad_id, accept, finish) values(%s, %s, %s, %s, %s, FALSE, FALSE)", \
                          transaction_id, transaction_date, owner_id, uid, ad_id)
 
@@ -307,6 +310,8 @@ def owner_accept_transaction(uid, ad_id, renter_id):
         conn.execute("update transaction set accept = TRUE where owner_id = '%s' and renter_id = '%s' and ad_id = '%s'" % (uid, renter_id, ad_id))
         cursor = conn.execute("select t.*, ad.title, ad.description, ad.location from transaction as t, ad_car as ad where (t.renter_id = '%s' or t.owner_id = '%s') and t.ad_id = ad.ad_id" % (uid, uid))
         cursor = cursor.fetchall()
+        
+        conn.execute("update ad_car set availability  = FALSE where ad_id = '%s'" %(ad_id))
         
         other_request = conn.execute("select transaction_id from transaction where ad_id = '%s' and accept = '%s'" % (ad_id, False)).fetchall()
         print other_request
